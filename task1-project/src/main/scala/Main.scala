@@ -5,9 +5,11 @@ object Main extends App {
         override def run() = body
       }
       t.start
+
+      //println(assert (acc.getBalanceAmount == 250))
       t
     }
-
+    
   // Write a few transaction examples using Threads
 
 }

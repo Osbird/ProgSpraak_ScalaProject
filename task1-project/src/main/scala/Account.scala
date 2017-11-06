@@ -1,26 +1,23 @@
+import exceptions._
+
 class Account(initialBalance: Double, val uid: Int = Bank getUniqueId) {
+
+//class Balance(var balance)
+
   private var balance = initialBalance
-  def withdraw(amount: Double): Unit = Account // Implement
-    if (amount > 0) && amount <= balance): {
-      balance = balance - amount
-      balance
-    } else throw new Error("insufficient funds")
-    //balance = initialBalance - amount
-    print(balance)
 
+  def withdraw(amount: Double): Unit = this.synchronized { // Implement
+    if (amount <= 0) throw new IllegalAmountException("Cannot withdraw negative amount")
+    else if (amount > balance) throw new  NoSufficientFundsException("insufficient funds")
+    else balance = balance - amount
+  }
 
+  def deposit(amount: Double): Unit = this.synchronized { // Implement
+    if (amount > 0) balance = balance + amount
+    else throw new IllegalAmountException("cannot deposit negative amount. Use withdraw instead");
+  }
 
-
-
-  def deposit(amount: Double): Unit = Account // Implement
-    if (amount > 0){
-      balance = balaance + amount
-      balance
-    }
-
-  def getBalanceAmount: Double = ??? // Implement
-
-  val acc = new Account(500)
-  acc.withdraw(250)
-  assert (acc.getBalanceAmount == 250)
+  def getBalanceAmount: Double = { // Implement
+    balance
+  }
 }
