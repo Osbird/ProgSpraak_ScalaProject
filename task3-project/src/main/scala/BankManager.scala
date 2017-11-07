@@ -10,24 +10,25 @@ object BankManager {
 
   def createBank(bankId: String): ActorRef = {
     val name = s"bank$bankId"
-    banks += (name -> actorSystem.actorOf(Props(classOf[Bank], bankId), name = name))
+    banks += (name -> actorSystem.actorOf(Bank.props(bankId), name = name))
     banks(name)
   }
 
   def findBank(bankId: String): ActorRef = {
-    banks(s"bank$bankId")
+    banks.getOrElse(s"bank$bankId", null)
+//    banks(s"bank$bankId")
   }
 
   def createAccount(accountId: String, bankId: String, initialBalance: Double): ActorRef = {
     val name = s"account$bankId$accountId"
     accounts += (name ->
-      actorSystem.actorOf(Props(classOf[Account], accountId, bankId, initialBalance), name = name))
+      actorSystem.actorOf(Account.props(accountId, bankId, initialBalance), name = name))
     accounts(name)
   }
 
   def findAccount(bankId: String, accountId: String): ActorRef = {
-    val name = s"account$bankId$accountId"
-    accounts(name)
+    accounts.getOrElse(s"account$bankId$accountId", null)
+//    accounts(s"account$bankId$accountId")
   }
 
 }

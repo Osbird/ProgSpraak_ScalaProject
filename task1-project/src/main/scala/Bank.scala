@@ -12,13 +12,12 @@ object Bank {
       from.withdraw(amount)
       to.deposit(amount)
       //Assertion after alternation
-      assert((from.getBalanceAmount + to.getBalanceAmount)==sum)
+      println(assert((from.getBalanceAmount + to.getBalanceAmount)==sum))
     }
 
 
-  def getUniqueId: Int = {
+  def getUniqueId: Int = this.synchronized {
     idCounter += 1 // Can this be improved?
     idCounter
   }
-
 }
